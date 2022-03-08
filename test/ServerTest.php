@@ -9,6 +9,7 @@
 
 namespace ZendTest\Json;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Json\Server;
 use Zend\Json;
 use Zend\Json\Server\Request;
@@ -22,7 +23,7 @@ require_once __DIR__ . '/TestAsset/FooFunc.php';
  * @group      Zend_JSON
  * @group      Zend_JSON_Server
  */
-class ServerTest extends \PHPUnit_Framework_TestCase
+class ServerTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -30,7 +31,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->server = new Server\Server();
     }
@@ -41,8 +42,13 @@ class ServerTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function tearDown()
+    protected function tearDown(): void
     {
+    }
+
+    public function dummyCallback(): void
+    {
+
     }
 
     public function testShouldBeAbleToBindFunctionToServer()
@@ -55,12 +61,12 @@ class ServerTest extends \PHPUnit_Framework_TestCase
     public function testShouldBeAbleToBindCallbackToServer()
     {
         try {
-            $this->server->addFunction([$this, 'setUp']);
+            $this->server->addFunction([$this, 'dummyCallback']);
         } catch (\Zend\Server\Reflection\Exception\RuntimeException $e) {
             $this->markTestIncomplete('PHPUnit docblocks may be incorrect');
         }
         $methods = $this->server->getFunctions();
-        $this->assertTrue($methods->hasMethod('setUp'));
+        $this->assertTrue($methods->hasMethod('dummyCallback'));
     }
 
     public function testShouldBeAbleToBindClassToServer()
@@ -111,7 +117,7 @@ class ServerTest extends \PHPUnit_Framework_TestCase
                      ->setClass(new Json\Json());
         $methods = $this->server->getFunctions();
         $zjsMethods = get_class_methods('Zend\Json\Server\Server');
-        $zjMethods  = get_class_methods('Zend_JSON');
+        $zjMethods  = get_class_methods('Zend\Json\Json');
         $this->assertGreaterThan(count($zjsMethods), count($methods));
         $this->assertGreaterThan(count($zjMethods), count($methods));
     }

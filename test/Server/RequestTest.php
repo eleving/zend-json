@@ -9,13 +9,14 @@
 
 namespace ZendTest\Json\Server;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Json;
 
 /**
  * @group      Zend_JSON
  * @group      Zend_JSON_Server
  */
-class RequestTest extends \PHPUnit_Framework_TestCase
+class RequestTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -23,7 +24,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->request = new \Zend\Json\Server\Request();
     }
@@ -34,7 +35,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function tearDown()
+    protected function tearDown(): void
     {
     }
 

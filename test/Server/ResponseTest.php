@@ -9,6 +9,7 @@
 
 namespace ZendTest\Json\Server;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Json\Server;
 use Zend\Json;
 
@@ -18,7 +19,7 @@ use Zend\Json;
  * @group      Zend_JSON
  * @group      Zend_JSON_Server
  */
-class ResponseTest extends \PHPUnit_Framework_TestCase
+class ResponseTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -26,7 +27,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->response = new \Zend\Json\Server\Response();
     }
@@ -182,7 +183,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoadingScalarJSONResponseShouldThrowException($json)
     {
-        $this->setExpectedException('Zend\Json\Exception\RuntimeException');
+        $this->expectException('Zend\Json\Exception\RuntimeException');
         $this->response->loadJson($json);
     }
 

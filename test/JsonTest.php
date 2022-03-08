@@ -9,21 +9,22 @@
 
 namespace ZendTest\Json;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Json;
 
 /**
  * @group      Zend_JSON
  */
-class JsonTest extends \PHPUnit_Framework_TestCase
+class JsonTest extends TestCase
 {
     private $_originalUseBuiltinEncoderDecoderValue;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_originalUseBuiltinEncoderDecoderValue = Json\Json::$useBuiltinEncoderDecoder;
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         Json\Json::$useBuiltinEncoderDecoder = $this->_originalUseBuiltinEncoderDecoderValue;
     }
@@ -347,7 +348,7 @@ class JsonTest extends \PHPUnit_Framework_TestCase
      */
     public function testDecodeBorkedJsonShouldThrowException1()
     {
-        $this->setExpectedException('Zend\Json\Exception\RuntimeException');
+        $this->expectException('Zend\Json\Exception\RuntimeException');
         Json\Decoder::decode('[a"],["a],[][]');
     }
 
@@ -356,7 +357,7 @@ class JsonTest extends \PHPUnit_Framework_TestCase
      */
     public function testDecodeBorkedJsonShouldThrowException2()
     {
-        $this->setExpectedException('Zend\Json\Exception\RuntimeException');
+        $this->expectException('Zend\Json\Exception\RuntimeException');
         Json\Decoder::decode('[a"],["a]');
     }
 
@@ -365,7 +366,7 @@ class JsonTest extends \PHPUnit_Framework_TestCase
      */
     public function testOctalValuesAreNotSupportedInJsonNotation()
     {
-        $this->setExpectedException('Zend\Json\Exception\RuntimeException');
+        $this->expectException('Zend\Json\Exception\RuntimeException');
         Json\Decoder::decode('010');
     }
 
@@ -386,7 +387,7 @@ class JsonTest extends \PHPUnit_Framework_TestCase
         $encoded = Json\Encoder::encode($everything);
 
         // should fail
-        $this->setExpectedException('Zend\Json\Exception\RecursionException');
+        $this->expectException('Zend\Json\Exception\RecursionException');
         Json\Encoder::encode($everything, true);
     }
 
@@ -415,12 +416,12 @@ class JsonTest extends \PHPUnit_Framework_TestCase
 
     public function testEncodeObject()
     {
-        $actual  = new Object();
+        $actual  = new TestObject();
         $encoded = Json\Encoder::encode($actual);
         $decoded = Json\Decoder::decode($encoded, Json\Json::TYPE_OBJECT);
 
         $this->assertTrue(isset($decoded->__className));
-        $this->assertEquals('ZendTest\Json\Object', $decoded->__className);
+        $this->assertEquals('ZendTest\Json\TestObject', $decoded->__className);
         $this->assertTrue(isset($decoded->foo));
         $this->assertEquals('bar', $decoded->foo);
         $this->assertTrue(isset($decoded->bar));
@@ -430,9 +431,9 @@ class JsonTest extends \PHPUnit_Framework_TestCase
 
     public function testEncodeClass()
     {
-        $encoded = Json\Encoder::encodeClass('ZendTest\Json\Object');
+        $encoded = Json\Encoder::encodeClass('ZendTest\Json\TestObject');
 
-        $this->assertContains("Class.create('ZendTest\\Json\\Object'", $encoded);
+        $this->assertContains("Class.create('ZendTest\\Json\\TestObject'", $encoded);
         $this->assertContains("ZAjaxEngine.invokeRemoteMethod(this, 'foo'", $encoded);
         $this->assertContains("ZAjaxEngine.invokeRemoteMethod(this, 'bar'", $encoded);
         $this->assertNotContains("ZAjaxEngine.invokeRemoteMethod(this, 'baz'", $encoded);
@@ -443,9 +444,9 @@ class JsonTest extends \PHPUnit_Framework_TestCase
 
     public function testEncodeClasses()
     {
-        $encoded = Json\Encoder::encodeClasses(['ZendTest\Json\Object', 'Zend\Json\Json']);
+        $encoded = Json\Encoder::encodeClasses(['ZendTest\Json\TestObject', 'Zend\Json\Json']);
 
-        $this->assertContains("Class.create('ZendTest\\Json\\Object'", $encoded);
+        $this->assertContains("Class.create('ZendTest\\Json\\TestObject'", $encoded);
         $this->assertContains("Class.create('Zend\\Json\\Json'", $encoded);
     }
 
@@ -820,7 +821,7 @@ class JsonTest extends \PHPUnit_Framework_TestCase
      */
     public function testDecodingInvalidJSONShouldRaiseAnException()
     {
-        $this->setExpectedException('Zend\Json\Exception\RuntimeException');
+        $this->expectException('Zend\Json\Exception\RuntimeException');
         Json\Json::decode(' some string ');
     }
 
@@ -1032,7 +1033,7 @@ class Item
 /**
  * Zend_JSONTest_Object: test class for encoding classes
  */
-class Object
+class TestObject
 {
     const FOO = 'bar';
 

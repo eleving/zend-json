@@ -9,6 +9,7 @@
 
 namespace ZendTest\Json\Server\Smd;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Json\Server\Smd\Service;
 use Zend\Json\Server;
 
@@ -18,7 +19,7 @@ use Zend\Json\Server;
  * @group      Zend_JSON
  * @group      Zend_JSON_Server
  */
-class ServiceTest extends \PHPUnit_Framework_TestCase
+class ServiceTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -26,26 +27,26 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->service = new Service('foo');
     }
 
     public function testConstructorShouldThrowExceptionWhenNoNameSetWhenNullProvided()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'requires a name');
+        $this->expectException('Zend\Json\Server\Exception\InvalidArgumentException', 'requires a name');
         $service = new Service(null);
     }
 
     public function testConstructorShouldThrowExceptionWhenNoNameSetWhenArrayProvided()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'requires a name');
+        $this->expectException('Zend\Json\Server\Exception\InvalidArgumentException', 'requires a name');
         $service = new Service(null);
     }
 
     public function testSettingNameShouldThrowExceptionWhenContainingInvalidFormatStartingWithInt()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid name');
+        $this->expectException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid name');
         $this->service->setName('0ab-?');
     }
 
@@ -57,7 +58,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testSettingNameShouldThrowExceptionWhenContainingInvalidFormatStartingWithRpc()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid name');
+        $this->expectException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid name');
         $this->service->setName('rpc.Foo');
     }
 
@@ -96,13 +97,13 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testSettingTransportThrowsExceptionWhenSetToGet()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid transport');
+        $this->expectException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid transport');
         $this->service->setTransport('GET');
     }
 
     public function testSettingTransportThrowsExceptionWhenSetToRest()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid transport');
+        $this->expectException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid transport');
         $this->service->setTransport('REST');
     }
 
@@ -181,7 +182,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidParamTypeShouldThrowException()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid param type');
+        $this->expectException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid param type');
         $this->service->addParam(new \stdClass);
     }
 
@@ -279,7 +280,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidReturnTypeShouldThrowException()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid param type');
+        $this->expectException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid param type');
         $this->service->setReturn(new \stdClass);
     }
 

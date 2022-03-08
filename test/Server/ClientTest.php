@@ -9,6 +9,7 @@
 
 namespace ZendTest\Json\Server;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Client\Adapter\Test as TestAdapter;
 use Zend\Json\Server\Client;
@@ -19,7 +20,7 @@ use Zend\Json\Server\Response;
 /**
  * @group      Zend_XmlRpc
  */
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     /**
      * @var TestAdapter
@@ -36,7 +37,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     protected $jsonClient;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->httpAdapter = new TestAdapter();
         $this->httpClient = new HttpClient('http://foo',
@@ -85,8 +86,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->setServerResponseTo(true);
         $this->jsonClient->call('foo');
 
-        //$this->assertInstanceOf('Zend\\Json\\Server\\Request', $this->jsonClient->getLastRequest());
-        //$this->assertInstanceOf('Zend\\Json\\Server\\Response', $this->jsonClient->getLastResponse());
+        $this->assertInstanceOf('Zend\\Json\\Server\\Request', $this->jsonClient->getLastRequest());
+        $this->assertInstanceOf('Zend\\Json\\Server\\Response', $this->jsonClient->getLastResponse());
     }
 
     public function testSuccessfulRpcMethodCallWithNoParameters()
@@ -143,7 +144,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $response = $this->makeHttpResponseFrom($body, $status, $message);
         $this->httpAdapter->setResponse($response);
 
-        $this->setExpectedException('Zend\\Json\\Server\\Exception\\HttpException', $message, $status);
+        $this->expectException('Zend\\Json\\Server\\Exception\\HttpException', $message, $status);
         $this->jsonClient->call('foo');
     }
 
@@ -160,7 +161,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $response = $this->makeHttpResponseFrom($json);
         $this->httpAdapter->setResponse($response);
 
-        $this->setExpectedException('Zend\\Json\\Server\\Exception\\ErrorException', $message, $code);
+        $this->expectException('Zend\\Json\\Server\\Exception\\ErrorException', $message, $code);
         $this->jsonClient->call('foo');
     }
 
@@ -224,7 +225,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $response = $this->makeHttpResponseFrom('false');
         $this->httpAdapter->setResponse($response);
-        $this->setExpectedException('Zend\Json\Exception\ExceptionInterface');
+        $this->expectException('Zend\Json\Exception\ExceptionInterface');
         $this->jsonClient->call('foo');
     }
 

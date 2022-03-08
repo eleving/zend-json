@@ -9,6 +9,7 @@
 
 namespace ZendTest\Json\Server;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Json\Server;
 
 /**
@@ -17,7 +18,7 @@ use Zend\Json\Server;
  * @group      Zend_JSON
  * @group      Zend_JSON_Server
  */
-class CacheTest extends \PHPUnit_Framework_TestCase
+class CacheTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -25,7 +26,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->server = new Server\Server();
         $this->server->setClass('ZendTest\Json\Server\Foo', 'foo');
@@ -47,7 +48,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function tearDown()
+    protected function tearDown(): void
     {
         if (file_exists($this->cacheFile)) {
             unlink($this->cacheFile);

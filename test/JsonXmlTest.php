@@ -9,6 +9,7 @@
 
 namespace ZendTest\Json;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Json;
 
 error_reporting(E_ALL | E_STRICT); // now required for each test suite
@@ -24,7 +25,7 @@ error_reporting(E_ALL | E_STRICT); // now required for each test suite
 /**
  * @group      Zend_JSON
  */
-class JsonXmlTest extends \PHPUnit_Framework_TestCase
+class JsonXmlTest extends TestCase
 {
     /**
      * xml2json Test 1

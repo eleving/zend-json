@@ -9,6 +9,7 @@
 
 namespace ZendTest\Json\Server;
 
+use PHPUnit\Framework\TestCase;
 use Zend\Json\Server\Smd;
 use Zend\Json\Server\Exception\InvalidArgumentException;
 use Zend\Json\Server\Exception\RuntimeException;
@@ -20,7 +21,7 @@ use Zend\Json;
  * @group      Zend_Json
  * @group      Zend_Json_Server
  */
-class SmdTest extends \PHPUnit_Framework_TestCase
+class SmdTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -28,7 +29,7 @@ class SmdTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->smd = new SMD();
     }
