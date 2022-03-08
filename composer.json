@@ -1,20 +1,19 @@
 {
-    "name": "zendframework/zend-json",
+    "name": "eleving/zend-json",
     "description": "provides convenience methods for serializing native PHP to JSON and decoding JSON to native PHP",
-    "license": "BSD-3-Clause",
-    "keywords": [
-        "zf2",
-        "json"
-    ],
-    "homepage": "https://github.com/zendframework/zend-json",
+    "license": "proprietary",
+    "homepage": "https://github.com/eleving/zend-json",
     "extra": {
         "branch-alias": {
             "dev-master": "2.6-dev",
             "dev-develop": "2.7-dev"
         }
     },
+    "replace": {
+        "zendframework/zend-json": "2.6.1"
+    },
     "require": {
-        "php": "^5.5 || ^7.0"
+        "php": "^5.5 || ^7.0 || ^8.0"
     },
     "require-dev": {
         "zendframework/zend-http": "^2.5.4",
